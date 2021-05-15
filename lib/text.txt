@@ -1,0 +1,34 @@
+The following RangeError was thrown while handling a gesture:
+RangeError (index): Invalid value: Not in inclusive range 0..6: 8
+
+When the exception was thrown, this was the stack:
+#0      List._setIndexed (dart:core-patch/growable_array.dart:262:73)
+#1      List.[]= (dart:core-patch/growable_array.dart:258:5)
+#2      _RREFState.initialiseTableB.<anonymous closure> (package:linearAlg/RREF.dart:200:22)
+#3      FormFieldState.save (package:flutter/src/widgets/form.dart:439:22)
+#4      FormState.save (package:flutter/src/widgets/form.dart:221:13)
+#5      _RREFState.build.<anonymous closure> (package:linearAlg/RREF.dart:388:35)
+#6      _InkResponseState._handleTap (package:flutter/src/material/ink_well.dart:991:20)
+#7      GestureRecognizer.invokeCallback (package:flutter/src/gestures/recognizer.dart:182:24)
+#8      TapGestureRecognizer.handleTapUp (package:flutter/src/gestures/tap.dart:607:11)
+#9      BaseTapGestureRecognizer._checkUp (package:flutter/src/gestures/tap.dart:296:5)
+#10     BaseTapGestureRecognizer.acceptGesture (package:flutter/src/gestures/tap.dart:267:7)
+#11     GestureArenaManager.sweep (package:flutter/src/gestures/arena.dart:157:27)
+#12     GestureBinding.handleEvent (package:flutter/src/gestures/binding.dart:385:20)
+#13     GestureBinding.dispatchEvent (package:flutter/src/gestures/binding.dart:361:22)
+#14     RendererBinding.dispatchEvent (package:flutter/src/rendering/binding.dart:278:11)
+#15     GestureBinding._handlePointerEventImmediately
+(package:flutter/src/gestures/binding.dart:316:7)
+#16     GestureBinding.handlePointerEvent (package:flutter/src/gestures/binding.dart:280:5)
+#17     GestureBinding._flushPointerEventQueue
+(package:flutter/src/gestures/binding.dart:238:7)
+#18     GestureBinding._handlePointerDataPacket
+(package:flutter/src/gestures/binding.dart:221:7)
+#22     _invoke1 (dart:ui/hooks.dart:180:10)
+#23     PlatformDispatcher._dispatchPointerDataPacket (dart:ui/platform_dispatcher.dart:276:7)
+#24     _dispatchPointerDataPacket (dart:ui/hooks.dart:96:31)
+(elided 3 frames from dart:async)
+
+Handler: "onTap"
+Recognizer:
+  TapGestureRecognizer#f76d8
