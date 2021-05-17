@@ -91,10 +91,12 @@ class _EQNSOLState extends State<EQNSOL> {
           // if(double.parse(s[i])!=null || s[i]=="."||s[i]=="/"||s[i]=="+"){
           // }
           if (isAlpha(s[i]) || (i == s.length - 1 && !varAct)) {
-            if (variable != s[i] && isAlpha(s[i])) if (variable != "")
+            if (variable != s[i] && isAlpha(s[i])) if (variable != "") {
+              print("hahahah ${s[i]} ${variable != s[i]} ${variable} variable");
               return "There are more than one variable:";
+            }
             if (isAlpha(s[i])) varAct = true;
-            variable = s[i];
+            if (variable=="") variable = s[i];
             // print(s.substring(1, 2));
             // print("Lilis: ${s.substring(1, i).trim()}");
             vals[k][0] *= nummy(s.substring(1, i));
@@ -252,8 +254,8 @@ class _EQNSOLState extends State<EQNSOL> {
             "You can solve any single variable equation (No fractional power)\n\n" +
                 "Valid Eqation types (example):\n\n" +
                 "0.5x3+1=0 or 0.5x^3+1=0\n\n" +
-                "0.5x3+(1/3)x2-4x+8-x(-1) = 0\n\n" +
-                "0.5x^3+(1/3)x^2-4x+8-x-1 = 0",
+                "0.5x3+(1/3)x2-4x+8-x^(-1) = 0\n\n" +
+                "0.5x^3+(1/3)x^2-4x+8-x^-1 = 0",
             style: TextStyle(fontSize: 20),
           ),
         ),
