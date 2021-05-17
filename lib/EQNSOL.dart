@@ -287,7 +287,7 @@ class _EQNSOLState extends State<EQNSOL> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("Row Reduced Echelon Form"),
+        title: Text("Equation Solver"),
       ),
       body: GestureDetector(
         onTap: () {
