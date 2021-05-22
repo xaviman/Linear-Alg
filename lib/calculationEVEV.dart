@@ -479,12 +479,70 @@ void startSolve(
   List<Complex> coffs = [];
   detA.forEach((key, value) {
     for (var i = value.length - 1; i >= 0; i--) {
-      coffs.add(Complex(value[i], 0));
+      coffs.add(Complex.fromReal(value[i]));
     }
   });
+  print("Coffs:::::::::::::::::::::::::::::::::::::::::::::::::::::");
   print(coffs);
-  Laguerre equation = Laguerre(coefficients: coffs);
-  coffs = equation.solutions();
+  print("----------------------------------------------------------");
+
+  while (coffs[0].real == 0) {
+    coffs.removeAt(0);
+  }
+
+  switch (coffs.length) {
+    case 2:
+      {
+        Linear equation = Linear(
+          a: coffs[0],
+          b: coffs[1],
+        );
+        coffs = equation.solutions();
+      }
+      break;
+    case 3:
+      {
+        Quadratic equation = Quadratic(
+          a: coffs[0],
+          b: coffs[1],
+          c: coffs[2],
+        );
+        coffs = equation.solutions();
+      }
+      break;
+    case 4:
+      {
+        Cubic equation = Cubic(
+          a: coffs[0],
+          b: coffs[1],
+          c: coffs[2],
+          d: coffs[3],
+        );
+        coffs = equation.solutions();
+      }
+      break;
+    case 5:
+      {
+        Quartic equation = Quartic(
+          a: coffs[0],
+          b: coffs[1],
+          c: coffs[2],
+          d: coffs[3],
+          e: coffs[4],
+        );
+        coffs = equation.solutions();
+      }
+      break;
+    default:
+      {
+        Laguerre equation = Laguerre(coefficients: coffs);
+        coffs = equation.solutions();
+      }
+      break;
+  }
+  // Laguerre equation = Laguerre(coefficients: coffs);
+  // coffs = equation.solutions();
+  // Laguerre equation = Laguerre(coefficients: coffs);
   updateText("Eigen values are:", true);
   updateEigenValues(coffs);
   print("STARTING SOLVING EIGEN");
@@ -492,8 +550,21 @@ void startSolve(
 
   solveEigenVec(coffs, matrix, eigenVectors);
   print("DEBUGG");
-  print(rankSemi([0, 0, 0]));
-  print(rankSemi([0, 2, 2]));
+  // print(rankSemi([0, 0, 0]));
+  // print(rankSemi([0, 2, 2]));
+  // Cubic equation2 = Cubic(
+  //   a: Complex(1, 0),
+  //   b: Complex(1, 0),
+  //   c: Complex(-120, 0),
+  //   d: Complex(3200, 0),
+  // );
+  // print(equation2.solutions());
+
+  // List<int> co = [0, 2, 0, 5, 4, 8, 46, 8, 4];
+  // while (co[0] == 0) {
+  //   co.removeAt(0);
+  // }
+  // print(co);
   // print(dp(0.00025));
   // for()
 

@@ -338,33 +338,92 @@ class _RREFState extends State<RREF> {
       });
   }
 
-  void lastPartSol(
-    List<double> solMat,
-    List<double> rank,
-  ) {
+  void lastPartSol(List<double> solMat, List<double> rank, List<int> rankPos) {
     List<Padding> sol = [];
 
-    solMat.forEach((element) {
-      sol.add(Padding(
-          padding: EdgeInsets.all(5),
-          child: Text(
-            frac ? element.toFraction().toString() : dp(element),
-            textAlign: TextAlign.center,
-            style: TextStyle(
-              fontSize: (20 - solMat.length).toDouble(),
-            ),
-          )));
-    });
     double padding = 10;
     TextStyle style = TextStyle(fontSize: 18, fontWeight: FontWeight.w400);
     String mess = "";
+    Table gensol;
     if (rank[0] != rank[1])
-      mess = "The eqation is inconsistent as Rank(A)!=Rank(A|b)";
-    else if (rank[2] == 0)
-      mess = "The eqation have infinite number of sol as |A| = 0";
-    else
-      mess = "The sol of the eqation is:";
-
+      gensol = Table(
+        border: TableBorder.all(),
+        children: [
+          TableRow(
+            children: [
+              Padding(
+                padding: EdgeInsets.all(padding),
+                child: Text(
+                  "The eqation is inconsistent as Rank(A)!=Rank(A|b)",
+                  style: style,
+                ),
+              ),
+            ],
+          )
+        ],
+      );
+    else {
+      mess = "The general sol of the eqation is:";
+      int cou = 0;
+      Column solu = Column(children: []);
+      for (int i = 0; i < nValue.value; i++) {
+        if (rankPos.contains(i)) {
+          solu.children.add(
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: Text(
+                frac
+                    ? solMat[cou].toFraction().toString()
+                    : solMat[cou].toStringAsFixed(3),
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20 - nValue.value.toDouble()),
+              ),
+            ),
+          );
+          cou++;
+        } else {
+          solu.children.add(
+            Padding(
+              padding: EdgeInsets.all(5),
+              child: Text(
+                frac ? 0.toFraction().toString() : 0.toStringAsFixed(3),
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 20 - nValue.value.toDouble()),
+              ),
+            ),
+          );
+        }
+        gensol = Table(
+          border: TableBorder.all(),
+          columnWidths: {1: FractionColumnWidth(0.3)},
+          children: [
+            TableRow(
+              children: [
+                Padding(
+                  padding: EdgeInsets.all(padding),
+                  child: Text(
+                    "The general sol of the eqation is:",
+                    style: style,
+                  ),
+                ),
+                solu,
+              ],
+            )
+          ],
+        );
+      }
+      // solMat.forEach((element) {
+      //   sol.add(Padding(
+      //       padding: EdgeInsets.all(5),
+      //       child: Text(
+      //         frac ? element.toFraction().toString() : dp(element),
+      //         textAlign: TextAlign.center,
+      //         style: TextStyle(
+      //           fontSize: (20 - solMat.length).toDouble(),
+      //         ),
+      //       )));
+      // });
+    }
     Column t = Column(
       children: [
         Table(
@@ -393,29 +452,17 @@ class _RREFState extends State<RREF> {
             ),
           ],
         ),
-        Table(
-          border: TableBorder.all(),
-          children: [
-            TableRow(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(padding),
-                  child: Text(
-                    mess,
-                    style: style,
-                  ),
-                ),
-              ],
-            )
-          ],
-        ),
-        if (rank[0] == rank[1] && rank[2] != 0)
-          Table(
-            border: TableBorder.all(),
-            children: [
-              TableRow(children: sol),
-            ],
-          ),
+        gensol,
+        // Table(
+        //   border: TableBorder.all(),
+        //   children: [
+        //     TableRow(
+        //       children: [
+        //         gensol,
+        //       ],
+        //     )
+        //   ],
+        // ),
       ],
     );
     setState(() {
@@ -545,7 +592,7 @@ class _RREFState extends State<RREF> {
           children: [
             TableRow(children: [
               Text(
-                "* the fraction is still under development, so it might look weird *",
+                "* the fraction is might show wrong values due to floating value point errors *",
                 style: TextStyle(fontSize: 10),
               ),
             ])

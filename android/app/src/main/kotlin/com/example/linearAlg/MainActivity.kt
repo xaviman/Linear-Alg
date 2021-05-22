@@ -1,4 +1,4 @@
-package com.example.linearAlg
+package com.xavi.linearAlg
 
 import io.flutter.embedding.android.FlutterActivity
 

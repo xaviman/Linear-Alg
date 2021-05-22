@@ -104,7 +104,7 @@ class _MyHomePageState extends State<MyHomePage> {
           crossAxisSpacing: 4.0,
           children: <Widget>[
             menuCard("RREF", "assets/image/RREF_B.jpg", RREF()),
-            menuCard("GS", "assets/image/GSO_B.jpg", GSO()),
+            menuCard("GSO", "assets/image/GSO_B.jpg", GSO()),
             menuCard("Eigen Values\nEigen Vectors",
                 "assets/image/EVEV.jpg", EVEV()),
             menuCard(
@@ -112,11 +112,11 @@ class _MyHomePageState extends State<MyHomePage> {
           ],
         ),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => {},
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ), // This trailing comma makes auto-formatting nicer for build methods.
+      // floatingActionButton: FloatingActionButton(
+      //   onPressed: () => {},
+      //   tooltip: 'Increment',
+      //   child: Icon(Icons.add),
+      // ), // This trailing comma makes auto-formatting nicer for build methods.
     );
   }
 }

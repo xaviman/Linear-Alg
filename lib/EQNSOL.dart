@@ -2,7 +2,7 @@ import 'dart:math';
 import 'package:string_validator/string_validator.dart';
 import 'package:flutter/material.dart';
 import 'package:fraction/fraction.dart';
-import 'package:equations/equations.dart';
+import 'package:equations/equations.dart' as A;
 
 class EQNSOL extends StatefulWidget {
   EQNSOL({Key key, this.title}) : super(key: key);
@@ -96,7 +96,7 @@ class _EQNSOLState extends State<EQNSOL> {
               return "There are more than one variable:";
             }
             if (isAlpha(s[i])) varAct = true;
-            if (variable=="") variable = s[i];
+            if (variable == "") variable = s[i];
             // print(s.substring(1, 2));
             // print("Lilis: ${s.substring(1, i).trim()}");
             vals[k][0] *= nummy(s.substring(1, i));
@@ -153,6 +153,7 @@ class _EQNSOLState extends State<EQNSOL> {
   }
 
   String dp(double a) {
+    if (a.toFraction() == Fraction(1)) return "";
     if (a.round() == a) return a.round().toString();
     return a.toFraction().toString();
   }
@@ -199,11 +200,61 @@ class _EQNSOLState extends State<EQNSOL> {
       ),
       padding: EdgeInsets.all(10),
     ));
-    List<Complex> p = [];
-    for (var i in vals) p.add(Complex(i[0], 0));
-    Laguerre equation = Laguerre(coefficients: p);
+    List<A.Complex> p = [];
+    for (var i in vals) p.add(A.Complex.fromReal(i[0]));
+    switch (p.length) {
+      case 2:
+        {
+          A.Linear equation = A.Linear(
+            a: p[0],
+            b: p[1],
+          );
+          p = equation.solutions();
+        }
+        break;
+      case 3:
+        {
+          A.Quadratic equation = A.Quadratic(
+            a: p[0],
+            b: p[1],
+            c: p[2],
+          );
+          p = equation.solutions();
+        }
+        break;
+      case 4:
+        {
+          A.Cubic equation = A.Cubic(
+            a: p[0],
+            b: p[1],
+            c: p[2],
+            d: p[3],
+          );
+          p = equation.solutions();
+        }
+        break;
+      case 5:
+        {
+          A.Quartic equation = A.Quartic(
+            a: p[0],
+            b: p[1],
+            c: p[2],
+            d: p[3],
+            e: p[4],
+          );
+          p = equation.solutions();
+        }
+        break;
+      default:
+        {
+          A.Laguerre equation = A.Laguerre(coefficients: p);
+          p = equation.solutions();
+        }
+        break;
+    }
+    // Laguerre equation = Laguerre(coefficients: p);
     List<TableRow> t = [];
-    p = equation.solutions();
+    // p = equation.solutions();
     for (int i = 0; i < p.length; i++) {
       String sq = "";
       if (dpabs(p[i].real) != 0) sq += dpabs(p[i].real).toString();
@@ -331,6 +382,10 @@ class _EQNSOLState extends State<EQNSOL> {
                   });
                   solveeqn();
                   print("DONE EVERTHIG");
+
+                  // Newton newton =
+                  //     Newton(function: "2*x+cos(x)", x0: -1, maxSteps: 5);
+                  // print(newton.solve());
                   ScaffoldMessenger.of(context)
                       .showSnackBar(SnackBar(content: Text('Processing Data')));
                 }

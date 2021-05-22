@@ -160,9 +160,12 @@ List<List<List<double>>> rowOpperation(
     }
   }
   double detA = 1;
-  for (int i = 0; i < min(matrix.length, matrix[0].length); i++) {
-    detA *= dpabs(matrix[i][i]);
-  }
+  if (matrix.length == matrix[0].length-1) {
+    for (int i = 0; i < min(matrix.length, matrix[0].length); i++) {
+      detA *= dpabs(matrix[i][i]);
+    }
+  } else
+    detA = 0;
 
   matrix = divideRow(matrix, updateSolution, frac);
   matrix = sortForm(matrix, updateSolution, frac);
@@ -212,7 +215,7 @@ List rankCalc(
     solMat.add(matrix[i][matrix[0].length - 1]);
     do {
       if (dpabs(matrix[i][j]) != 0) {
-        if (j < matrix[0].length) {
+        if (j < matrix[0].length - 1) {
           rankPos.add(j);
           rankA++;
         }
@@ -221,7 +224,7 @@ List rankCalc(
     } while (matrix[i][j] == 0 && j++ < matrix[0].length - 1);
   }
   // print("Rank of the matrixes are: $rankA, $rankAB");
-  lastPartSol(solMat, [rankA, rankAB, detA]);
+  lastPartSol(solMat, [rankA, rankAB, detA], rankPos);
   return [rankA.round(), rankPos];
 }
 
